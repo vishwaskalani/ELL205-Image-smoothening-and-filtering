@@ -1,14 +1,8 @@
-import numpy
-def estimate_noise(I):
+import cv2
+from skimage.restoration import estimate_sigma
 
-  H, W = I.shape
-
-  M = [[1, -2, 1],
-       [-2, 4, -2],
-       [1, -2, 1]]
-
-  sigma = np.sum(np.sum(np.absolute(convolve2d(I, M))))
-  sigma = sigma * math.sqrt(0.5 * math.pi) / (6 * (W-2) * (H-2))
-
-  return sigma
-
+def estimate_noise(image_path):
+    img = cv2.imread(image_path)
+    return estimate_sigma(img, channel_axis=-1, average_sigmas=True)
+print(estimate_noise("1.jpg"))
+print(estimate_noise())

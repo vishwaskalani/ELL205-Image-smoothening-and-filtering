@@ -6,16 +6,29 @@ def readIm(filename):
     return cv2.imread(filename)
 
 
-def convolve(matrix, kernel):
+def convolve(matrix, kernel, padding=True):
     mRows = matrix.shape[0]
     mCols = matrix.shape[1]
     kRows = kernel.shape[0]
     kCols = kernel.shape[1]
 
-    res = np.zeros(shape=(mRows - kRows, mCols - kCols))
+    assert kRows % 2 == 1
+    assert kCols % 2 == 1
 
-    for i in range(mRows - kRows):
-        for j in range(mCols - kCols):
+    res = np.zeros(shape=(mRows, mCols))
+
+    xPadding = (kernel.shape[1] - 1)//2
+    yPadding = (kernel.shape[0] - 1)//2
+    zerosY = np.zeros((yPadding, mCols))
+    matrix = np.concatenate((zerosY, matrix), axis=0)
+    matrix = np.concatenate((matrix, zerosY), axis=0)
+
+    zerosX = np.zeros((mRows + 2*yPadding, xPadding))
+    matrix = np.concatenate((zerosX, matrix), axis=1)
+    matrix = np.concatenate((matrix, zerosX), axis=1)
+
+    for i in range(mRows):
+        for j in range(mCols):
             for a in range(kRows):
                 for b in range(kCols):
                     res[i][j] += matrix[i+a][j+b] * kernel[a][b]

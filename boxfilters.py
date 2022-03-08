@@ -16,27 +16,28 @@
 # plt.show()
 
 
+from operator import index
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 from skimage.restoration import estimate_sigma
+import indexfile
 
 def estimate_noise(image_path):
     img = cv2.imread(image_path)
     return estimate_sigma(img, channel_axis=-1, average_sigmas=True)
-img = cv2.imread('1.jpg')
-print(type(img) )
 
+img = cv2.imread("1.jpg")
+print(estimate_sigma(img, channel_axis=-1, average_sigmas=True))
 blur = cv2.blur(img,(5,5))
+print(estimate_sigma(blur, channel_axis=-1, average_sigmas=True))
+print(estimate_noise("output.jpg"))
 
 plt.subplot(121),plt.imshow(img),plt.title('Original')
 plt.xticks([]), plt.yticks([])
 plt.subplot(122),plt.imshow(blur),plt.title('Blurred')
 plt.xticks([]), plt.yticks([])
 plt.show()
-print(estimate_noise("1.jpg"))
-print(estimate_noise(img))
-
 def square_matrix(square):
 	""" This function will calculate the value x
 	(i.e. blurred pixel value) for each 3 * 3 blur image.

@@ -1,28 +1,31 @@
+# import numpy as np
+# import cv2
+# from matplotlib import pyplot as plt
+# from PIL import Image, ImageFilter
+# #%matplotlib inline
+# image = cv2.imread('AM04NES.JPG') # reads the image
+# image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV) # convert to HSV
+# print(image.dtype )
+# figure_size = 9 # the dimension of the x and y axis of the kernal.
+# new_image = cv2.blur(image,(figure_size, figure_size))
+# plt.figure(figsize=(11,6))
+# plt.subplot(121), plt.imshow(cv2.cvtColor(image, cv2.COLOR_HSV2RGB)),plt.title('Original')
+# plt.xticks([]), plt.yticks([])
+# plt.subplot(122), plt.imshow(cv2.cvtColor(new_image, cv2.COLOR_HSV2RGB)),plt.title('Mean filter')
+# plt.xticks([]), plt.yticks([])
+# plt.show()
+
+
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
-from PIL import Image, ImageFilter
-%matplotlib inline
-image = cv2.imread('AM04NES.JPG') # reads the image
-image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV) # convert to HSV
-figure_size = 9 # the dimension of the x and y axis of the kernal.
-new_image = cv2.blur(image,(figure_size, figure_size))
-plt.figure(figsize=(11,6))
-plt.subplot(121), plt.imshow(cv2.cvtColor(image, cv2.COLOR_HSV2RGB)),plt.title('Original')
-plt.xticks([]), plt.yticks([])
-plt.subplot(122), plt.imshow(cv2.cvtColor(new_image, cv2.COLOR_HSV2RGB)),plt.title('Mean filter')
-plt.xticks([]), plt.yticks([])
-plt.show()
+from skimage.restoration import estimate_sigma
 
-
-
-
-
-import cv2
-import numpy as np
-from matplotlib import pyplot as plt
-
-img = cv2.imread('Screenshot_20210213-230649[1062].jpg')
+def estimate_noise(image_path):
+    img = cv2.imread(image_path)
+    return estimate_sigma(img, channel_axis=-1, average_sigmas=True)
+img = cv2.imread('1.jpg')
+print(type(img) )
 
 blur = cv2.blur(img,(5,5))
 
@@ -31,7 +34,8 @@ plt.xticks([]), plt.yticks([])
 plt.subplot(122),plt.imshow(blur),plt.title('Blurred')
 plt.xticks([]), plt.yticks([])
 plt.show()
-
+print(estimate_noise("1.jpg"))
+print(estimate_noise(img))
 
 def square_matrix(square):
 	""" This function will calculate the value x
@@ -112,3 +116,5 @@ image = [[7, 4, 0, 1],
 		[1, 4, 2, 0]]
 		
 print(boxBlur(image))
+
+

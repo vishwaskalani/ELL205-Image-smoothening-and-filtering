@@ -68,7 +68,8 @@ def convolveRGB(tensor, kernel):
 
 def linearBlur(fileName):
     im = readIm(filename=fileName)
-    filter = np.ones(shape=(3, 3))/9
+    filter = np.zeros(shape=(3, 3))
+    filter[1][1]=1
     result = convolveRGB(im, filter)
     cv2.imwrite("output.jpg", result)
 

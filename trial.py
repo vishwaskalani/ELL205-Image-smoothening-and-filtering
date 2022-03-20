@@ -3,21 +3,6 @@ import math
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-# # Set up grid and test data
-# nx, ny = 4,4
-# x = range(nx)
-# y = range(ny)
-
-# data = numpy.random.random((nx, ny))
-
-# hf = plt.figure()
-# ha = hf.add_subplot(111, projection='3d')
-
-# X, Y = numpy.meshgrid(x, y)  # `plot_surface` expects `x` and `y` data to be 2D
-# ha.plot_surface(X, Y, data)
-
-# plt.show()
-
 def kernel_plotter(Z):
     x = range(Z.shape[0])
     y = range(Z.shape[1])
@@ -27,23 +12,6 @@ def kernel_plotter(Z):
     X, Y = numpy.meshgrid(x, y)  # `plot_surface` expects `x` and `y` data to be 2D
     ha.plot_surface(X, Y, data)
     plt.show()
-
-def gen_gaussian_kernel(shape, mean, var):
-    coors = [range(shape[d]) for d in range(len(shape))]
-    k = numpy.zeros(shape=shape)
-    cartesian_product = [[]]
-    for coor in coors:
-        cartesian_product = [x + [y] for x in cartesian_product for y in coor]
-    for c in cartesian_product:
-        s = 0
-        for cc, m in zip(c,mean):
-            s += (cc - m)**2
-        k[tuple(c)] = numpy.exp(-s/(2*var))
-    l = numpy.sum(k)
-    k = k/l
-    return k
-# filter = gen_gaussian_kernel(shape=(5,5),mean=(1,1),var=1.0)
-# print(filter)
 
 def evaluator(x,mean,sigma):
     a = math.exp(-((((x-mean)/(sigma))**2)/2))    

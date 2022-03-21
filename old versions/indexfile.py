@@ -2,33 +2,17 @@ import numpy as np
 import cv2
 
 
-def readIm(filename):
-    return cv2.imread(filename)
-
-
-def convolve(matrix, kernel, padding=True):
+def convolve(matrix, kernel):
     mRows = matrix.shape[0]
     mCols = matrix.shape[1]
     kRows = kernel.shape[0]
     kCols = kernel.shape[1]
 
-    assert kRows % 2 == 1
-    assert kCols % 2 == 1
 
-    res = np.zeros(shape=(mRows, mCols))
+    res = np.zeros(shape=(mRows - kRows+1, mCols - kCols+1))
 
-    xPadding = (kernel.shape[1] - 1)//2
-    yPadding = (kernel.shape[0] - 1)//2
-    zerosY = np.zeros((yPadding, mCols))
-    matrix = np.concatenate((zerosY, matrix), axis=0)
-    matrix = np.concatenate((matrix, zerosY), axis=0)
-
-    zerosX = np.zeros((mRows + 2*yPadding, xPadding))
-    matrix = np.concatenate((zerosX, matrix), axis=1)
-    matrix = np.concatenate((matrix, zerosX), axis=1)
-
-    for i in range(mRows):
-        for j in range(mCols):
+    for i in range(mRows - kRows+1):
+        for j in range(mCols - kCols+1):
             for a in range(kRows):
                 for b in range(kCols):
                     res[i][j] += matrix[i+a][j+b] * kernel[a][b]
@@ -66,11 +50,9 @@ def convolveRGB(tensor, kernel):
     return result
 
 
-def linearBlur(fileName):
-    im = readIm(filename=fileName)
-    filter = np.ones(shape=(3, 3))/9
-    result = convolveRGB(im, filter)
+def linearBlur(image):
+    filter = np.zeros(shape=(3, 3))
+    filter[1][1]=1
+    result = convolveRGB(image, filter)
     cv2.imwrite("output.jpg", result)
-
-
-linearBlur("1.jpg")
+    return(result)

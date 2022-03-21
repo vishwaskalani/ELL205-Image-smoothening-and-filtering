@@ -30,7 +30,6 @@ def convolveRGB(tensor, kernel):
     r = np.zeros(shape=(rows, cols))
     g = np.zeros(shape=(rows, cols))
     b = np.zeros(shape=(rows, cols))
-
     for i in range(rows):
         for j in range(cols):
             b[i][j] = tensor[i][j][0]
@@ -44,15 +43,21 @@ def convolveRGB(tensor, kernel):
     return result
 
 
-#LOG------------------------------------------------------------------------
+def func1(x,mean,sigma):
+    return math.exp(-((((x-mean)/(sigma))**2)/2))
+function1 = np.vectorize(func1)
 
+def func2(x,mean,sigma):
+    return (sigma**2) - ((x-mean)**2)
+function2 = np.vectorize(func2)
 
-def  log_kernel(n,sigma):
-    return gaussian_kernel(n,sigma)
-
-
-#LOG --------------------------------------------------------------------
-
+def log_kernel(n,sigma): 
+    kernel_1D_x = np.linspace(-1*(n // 2), n // 2, n)
+    kernel_1D_y = np.linspace(-1*(n // 2), n // 2, n)
+    X,Y = np.meshgrid(kernel_1D_x, kernel_1D_y)
+    c = (1 / ((2 * np.pi) * (sigma**6)))
+    kernel_2D = -1*c*function1(X,0,sigma)*function1(Y,0,sigma)*(function2(X,0,sigma)+function2(Y,0,sigma))
+    return kernel_2D
 
 def evaluator(x,mean,sigma):
     a = math.exp(-((((x-mean)/(sigma))**2)/2))    

@@ -56,15 +56,19 @@ def convolveRGB(tensor, kernel):
     return result
 
 
-def gaussianBlur(image,n,sigma):
-    filter = gaussian_kernel_generator(n,sigma)
-    result = convolveRGB(image, filter)
-    cv2.imwrite("outputg.jpg", result)
-    return(result)
 
-def linearBlur(image,n):
+def delta_kernel_generator(n):
     filter = np.zeros(shape=(n, n))
     filter[1][1]=1
-    result = convolveRGB(image, filter)
-    cv2.imwrite("output.jpg", result)
+    return(filter)
+def mean_kernel_generator(n):
+    filter = np.ones(shape=(n, n))/(n*n)
+    return(filter)
+
+def filter(image,filtertype,n,*args):
+    if(len(args)>0):
+        kernel={"Gaussian":gaussian_kernel_generator(n,args[0])}
+    else:
+        kernel={"Delta":delta_kernel_generator(n),"Mean":mean_kernel_generator(n)}
+    result = convolveRGB(image, kernel[filtertype])
     return(result)

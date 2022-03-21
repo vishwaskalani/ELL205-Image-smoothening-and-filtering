@@ -32,4 +32,4 @@ def plot(imagefile):
 	plt.subplot(155),plt.imshow(mblur.astype('uint8')),plt.title('Mean Blurred')
 	plt.xticks([]), plt.yticks([])
 	plt.show()
-plot("1.jpg")
+plot("2.jpg")

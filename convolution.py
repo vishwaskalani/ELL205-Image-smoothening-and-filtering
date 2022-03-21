@@ -56,14 +56,14 @@ def convolveRGB(tensor, kernel):
     return result
 
 
-def gaussianBlur(image):
-    filter = gaussian_kernel_generator(3,456)
+def gaussianBlur(image,n,sigma):
+    filter = gaussian_kernel_generator(n,sigma)
     result = convolveRGB(image, filter)
     cv2.imwrite("outputg.jpg", result)
     return(result)
 
-def linearBlur(image):
-    filter = np.zeros(shape=(3, 3))
+def linearBlur(image,n):
+    filter = np.zeros(shape=(n, n))
     filter[1][1]=1
     result = convolveRGB(image, filter)
     cv2.imwrite("output.jpg", result)

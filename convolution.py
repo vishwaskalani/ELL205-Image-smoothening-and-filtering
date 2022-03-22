@@ -77,6 +77,7 @@ def delta_kernel(n):
     filter = np.zeros(shape=(n, n))
     filter[1][1]=1
     return(filter)
+    
 def mean_kernel(n):
     filter = np.ones(shape=(n, n))/(n*n)
     return(filter)

@@ -4,16 +4,30 @@ import convolution
 def filters(imagefile):
 	img1 = cv2.imread(imagefile)
 	imagename=imagefile.split(".")[0]
+<<<<<<< HEAD
 	typ="logsize"
 	logblur1=convolution.filter(img1,"LoG",3,0.6)
+=======
+	typ="gaussiansigma"
+	kern="Gaussian"
+	logblur1=convolution.filter(img1,kern,5,0.55)
+>>>>>>> f14389d1fb92a1113b49298cc3d7ca6b65816d00
 	cv2.imwrite(imagename+"_"+typ+"1.jpg",logblur1)
-	logblur2 =convolution.filter(img1,"LoG",5,0.6)
+	logblur2 =convolution.filter(img1,kern,5,0.6)
 	cv2.imwrite(imagename+"_"+typ+"2.jpg",logblur2)
+<<<<<<< HEAD
 	logblur3 =convolution.filter(img1,"LoG",7,0.6)
 	cv2.imwrite(imagename+"_"+typ+"3.jpg",logblur3)
 	logblur4=convolution.filter(img1,"LoG",9,0.6)
 	cv2.imwrite(imagename+"_"+typ+"4.jpg",logblur4)
 	logblur5 =convolution.filter(img1,"LoG",11,0.6)
+=======
+	logblur3 =convolution.filter(img1,kern,5,0.65)
+	cv2.imwrite(imagename+"_"+typ+"3.jpg",logblur3)
+	logblur4=convolution.filter(img1,kern,5,0.7)
+	cv2.imwrite(imagename+"_"+typ+"4.jpg",logblur4)
+	logblur5 =convolution.filter(img1,kern,5,0.75)
+>>>>>>> f14389d1fb92a1113b49298cc3d7ca6b65816d00
 	cv2.imwrite(imagename+"_"+typ+"5.jpg",logblur5)
 
 	# print(estimate_sigma(img1, channel_axis=-1, average_sigmas=True))

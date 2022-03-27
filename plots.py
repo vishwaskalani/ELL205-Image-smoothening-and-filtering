@@ -46,7 +46,8 @@ def plotlog(imagefile):
 				b[i][j] = tensor[i][j][2]
 		return cv2.merge((b,g,r))
 	imagename=imagefile.split('.')[0]
-	typ="gaussiansigma"
+	typ="logsize"
+	kern="LoG"
 	img1=RGBify(cv2.imread(imagefile))
 	logblur1=RGBify(cv2.imread(imagename+"_"+typ+"1.jpg"))
 	logblur2=RGBify(cv2.imread(imagename+"_"+typ+"2.jpg"))
@@ -55,16 +56,15 @@ def plotlog(imagefile):
 	logblur5=RGBify(cv2.imread(imagename+"_"+typ+"5.jpg"))
 	plt.subplot(161),plt.imshow(img1.astype('uint8')),plt.title('Original')
 	plt.xticks([]), plt.yticks([])
-	plt.subplot(162),plt.imshow(logblur1.astype('uint8')),plt.title('LoG 3,0.6')
+	plt.subplot(162),plt.imshow(logblur1.astype('uint8')),plt.title(kern+" ,3,1")
 	plt.xticks([]), plt.yticks([])
-	plt.subplot(163),plt.imshow(logblur2.astype('uint8')),plt.title('LoG 3,0.55')
+	plt.subplot(163),plt.imshow(logblur2.astype('uint8')),plt.title(kern+" ,5,1")
 	plt.xticks([]), plt.yticks([])
-	plt.subplot(164),plt.imshow(logblur3.astype('uint8')),plt.title('LoG 3,0.5')
+	plt.subplot(164),plt.imshow(logblur3.astype('uint8')),plt.title(kern+" ,7,1")
 	plt.xticks([]), plt.yticks([])
-	plt.subplot(165),plt.imshow(logblur4.astype('uint8')),plt.title('LoG 5,0.6')
+	plt.subplot(165),plt.imshow(logblur4.astype('uint8')),plt.title(kern+" ,9,1")
 	plt.xticks([]), plt.yticks([])
-	plt.subplot(166),plt.imshow(logblur5.astype('uint8')),plt.title('LoG 5,0.55')
+	plt.subplot(166),plt.imshow(logblur5.astype('uint8')),plt.title(kern+" ,11,1")
 	plt.xticks([]), plt.yticks([])
-
 	plt.show()
-plotlog("5.jpg")
+plotlog("1.jpg")

@@ -75,7 +75,7 @@ def gaussian_kernel(n,sigma):
 
 def delta_kernel(n):
     filter = np.zeros(shape=(n, n))
-    filter[1][1]=1
+    filter[n//2][n//2]=1
     return(filter)
     
 def mean_kernel(n):
